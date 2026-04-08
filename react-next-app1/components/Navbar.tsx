@@ -6,13 +6,23 @@ export default function Navbar() {
       <div className="d-flex w-100 align-items-center justify-content-between">
         <span className="navbar-brand m-0">Weather App</span>
 
-        <ul className="navbar-nav d-flex flex-row gap-3 m-0">
-          <li className="nav-item active">
+        <ul className="navbar-nav d-flex flex-row m-0 gap-3">
+          <li className="nav-item active nav-with-sep">
             <a className="nav-link" href="/">
               Home <span className="sr-only">(current)</span>
             </a>
           </li>
-          <li className="nav-item">
+          <li className="nav-item nav-with-sep">
+            <a className="nav-link" href="#">
+              Setup
+            </a>
+          </li>
+          <li className="nav-item nav-with-sep">
+            <a className="nav-link" href="#">
+              Reports
+            </a>
+          </li>
+          <li className="nav-item nav-with-sep">
             <a className="nav-link" href="/about">
               About
             </a>

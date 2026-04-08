@@ -100,6 +100,21 @@ export default function Dashboard() {
     }
   }, []);
 
+  const tooltipStyles = {
+    contentStyle: {
+      background: C.panel,
+      border: `1px solid ${C.border}`,
+      borderRadius: 8,
+    },
+    labelStyle: {
+      color: C.text,
+      fontWeight: 600,
+    },
+    itemStyle: {
+      color: C.text,
+    },
+  };
+
   if (loading || !hydrated) return <div style={{ padding: 50 }}>Loading...</div>;
 
   return (
@@ -112,7 +127,7 @@ export default function Dashboard() {
       }}>
 
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h2>IoT Dashboard</h2>
+          <h2>Device and Weather Dashboard</h2>
           <div><LiveTime /></div>
         </div>
 
@@ -144,7 +159,11 @@ export default function Dashboard() {
                 <CartesianGrid stroke="#333" />
                 <XAxis dataKey="time" />
                 <YAxis />
-                <Tooltip />
+                <Tooltip
+                  contentStyle={tooltipStyles.contentStyle}
+                  labelStyle={tooltipStyles.labelStyle}
+                  itemStyle={tooltipStyles.itemStyle}
+                />
                 <Area dataKey="temp" stroke={C.orange} fill={C.orange} />
               </AreaChart>
             </ResponsiveContainer>
@@ -157,7 +176,11 @@ export default function Dashboard() {
                 <CartesianGrid stroke="#333" />
                 <XAxis dataKey="time" />
                 <YAxis />
-                <Tooltip />
+                <Tooltip
+                  contentStyle={tooltipStyles.contentStyle}
+                  labelStyle={tooltipStyles.labelStyle}
+                  itemStyle={tooltipStyles.itemStyle}
+                />
                 <Line dataKey="humidity" stroke={C.accent} />
               </LineChart>
             </ResponsiveContainer>

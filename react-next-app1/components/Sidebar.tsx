@@ -14,8 +14,7 @@ export default function Sidebar() {
       name: "Home",
       items: [
         { name: "Overview", path: "/" },
-        { name: "Updates", path: "/updates" },
-        { name: "Reports", path: "/reports" },
+        { name: "Updates", path: "/updates" }
       ],
     },
     {
@@ -63,9 +62,6 @@ export default function Sidebar() {
   };
 
   const handleSectionClick = (id: string) => {
-    if (id === "account") {
-      //alert("Account clicked");
-    }
     toggleSection(id);
   };
 
