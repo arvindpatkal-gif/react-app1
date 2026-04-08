@@ -23,23 +23,3 @@ export interface HourlyData {
   wind: number;
   _ts: Date;
 }
-
-export interface BackgroundOptions {
-  type: 'gradient' | 'image' | 'solid';
-  gradient?: {
-    colors: string[];
-    direction?: 'to right' | 'to bottom' | 'to left' | 'to top' | '45deg' | '135deg';
-  };
-  image?: {
-    url: string;
-    position?: string;
-    size?: string;
-    repeat?: string;
-    opacity?: number;
-  };
-  solid?: string;
-  overlay?: {
-    color: string;
-    opacity: number;
-  };
-}

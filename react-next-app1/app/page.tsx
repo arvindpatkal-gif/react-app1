@@ -21,7 +21,7 @@ export default function Home() {
     loadWeather();
   }, []);
 
-  if (!weather) return <p style={{ padding: 50 }}>Loading...</p>;
+  if (!weather) return <p style={{ padding: 50, color: "white" }}>Loading...</p>;
 
   return (
     <div style={styles.page}>
@@ -32,7 +32,6 @@ export default function Home() {
           <h1 style={styles.temp}>{weather.temperature_2m}°</h1>
           <p>Humidity: {weather.relative_humidity_2m}%</p>
           <p>Wind: {weather.wind_speed_10m} km/h</p>
-          <p>Feels like: {weather.apparent_temperature}°C</p>
           <p>Latitude: {data.latitude}</p>
           <p>Longitude: {data.longitude}</p>
         </div>

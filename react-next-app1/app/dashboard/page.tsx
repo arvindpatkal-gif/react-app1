@@ -5,10 +5,12 @@ import {
   LineChart, Line, AreaChart, Area,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from "recharts";
-import { THEME, COORD, fetchWeather, processHourlyData } from "../../utils/weather";
+import { THEME, fetchWeather, processHourlyData } from "../../utils/weather";
+import LiveTime from "@/components/LiveTime";
 
 const C = THEME;
 
+// Reusable online/offline indicator for device rows.
 function StatusDot({ online }: { online: boolean }) {
   return (
     <span style={{ color: online ? C.green : "#ef4444" }}>
@@ -53,30 +55,22 @@ function DeviceRow({ name, location, status }: any) {
 }
 
 export default function Dashboard() {
+  // Weather API state, chart rows, and locally stored device list.
   const [current, setCurrent] = useState<any>(null);
   const [hourly, setHourly] = useState<any[]>([]);
   const [devices, setDevices] = useState<any[]>([]);
-  const [time, setTime] = useState("");
   const [loading, setLoading] = useState(true);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    // Mark client render ready before showing dynamic time text.
     setHydrated(true);
-    const update = () =>
-      setTime(
-        new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        })
-      );
-    update();
-    const t = setInterval(update, 1000);
-    return () => clearInterval(t);
   }, []);
 
+  // Memoized to keep the polling effect dependency stable.
   const load = useCallback(async () => {
     try {
+      // Fetch current + hourly weather and normalize chart data.
       const data = await fetchWeather();
       setCurrent(data.current);
 
@@ -90,12 +84,14 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
+    // Initial fetch and 1-minute auto-refresh.
     load();
     const interval = setInterval(load, 60000);
     return () => clearInterval(interval);
   }, [load]);
 
   useEffect(() => {
+    // Read device list from localStorage for sidebar/device module sync.
     try {
       const stored = JSON.parse(localStorage.getItem("devices") || "[]");
       setDevices(Array.isArray(stored) ? stored : []);
@@ -117,7 +113,7 @@ export default function Dashboard() {
 
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>IoT Dashboard</h2>
-          <div>{time}</div>
+          <div><LiveTime /></div>
         </div>
 
         <div style={{
@@ -126,6 +122,7 @@ export default function Dashboard() {
           gap: 10,
           marginTop: 20
         }}>
+          {/* Top KPI cards */}
           <KpiCard label="Temperature" value={current?.temperature_2m} unit="°C" />
           <KpiCard label="Humidity" value={current?.relative_humidity_2m} unit="%" />
           <KpiCard label="Wind" value={current?.wind_speed_10m} unit="km/h" />
@@ -138,6 +135,7 @@ export default function Dashboard() {
           gap: 20,
           marginTop: 30
         }}>
+          {/* Weather trend charts */}
 
           <div style={{ background: C.panel, padding: 10 }}>
             <h6>Temperature Trend</h6>
@@ -172,9 +170,10 @@ export default function Dashboard() {
 
           {devices.length === 0 && <p>No devices added</p>}
 
-          {devices.map((d) => (
+          {devices.map((d, i) => (
             <DeviceRow
-              key={d.id ?? Math.random()}
+              // Use deterministic fallback key when legacy items have no id.
+              key={d.id ?? `${d.name}-${d.location}-${i}`}
               name={d.name}
               location={d.location}
               status={d.status === "Online"}

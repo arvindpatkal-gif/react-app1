@@ -19,7 +19,7 @@ export default function RootLayout({
       <div style={{ width: "250px" }} className="bg-dark text-white">
         <Sidebar />
       </div>
-      <main className="flex-grow-1 overflow-auto p-4 bg-light">
+      <main className="flex-grow-1 overflow-auto bg-dark">
         {children}
       </main>
 

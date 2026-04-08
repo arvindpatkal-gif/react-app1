@@ -14,9 +14,11 @@ export const THEME = {
   muted: "#64748b",
 };
 
+// Default location used for weather API requests.
 export const COORD = { lat: 18.5204, lon: 73.8567, tz: "Asia/Kolkata" };
 
 export async function fetchWeather(): Promise<WeatherData> {
+  // Request current conditions + today's hourly data in the configured timezone.
   const url =
     `https://api.open-meteo.com/v1/forecast` +
     `?latitude=${COORD.lat}&longitude=${COORD.lon}` +
