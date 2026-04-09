@@ -38,7 +38,7 @@ export default function Home() {
 
         <div style={styles.right}>
           <h2>Weather Forecast</h2>
-          <h1 style={{ fontWeight: 300 }}>Cloudy ☁️</h1>
+          <h1 style={{ fontWeight: 300 }}>Sunny ☀️</h1>
           <p style={{ opacity: 0.7 }}>Live Data</p>
 
           <div style={styles.graph}></div>
